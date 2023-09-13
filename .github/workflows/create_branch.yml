@@ -46,7 +46,7 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
             token: ${{ secrets.USER_PAT }}
-            branch: $BRANCH_NAME
+            branch: ${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}
             base: main            
             title: "update readme"
             body: "created new branch and updated readme file"
