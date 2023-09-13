@@ -1,11 +1,11 @@
-name: create branch
+name: Create Branch and Pull Request
 on:
   workflow_dispatch:
 
 jobs:
-  create_branch:
+  create_branch_and_pull_request:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -13,40 +13,45 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email noreply@github.com
+
       - name: Generate Random Branch Name
         id: random-branch-name
         run: |
-          BRANCH_NAME="automated/${GITHUB_REPOSITORY##*/}-$(date +%s)"         
-          echo "::set-output name=NEW_BRANCH_NAME::$BRANCH_NAME" 
+          BRANCH_NAME="automated/${GITHUB_REPOSITORY##*/}-$(date +%s)"
+          echo "::set-output name=NEW_BRANCH_NAME::$BRANCH_NAME"
           echo "Generated BRANCH_NAME: $NEW_BRANCH_NAME"
+
       - name: Create New Branch
         run: |
           git checkout -b ${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}
           git config --global push.autoSetupRemote true
-          git push origin $BRANCH_NAME       
-      - name: update readme file
+          git push origin ${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}
+
+      - name: Update README file
         run: |
           ls -la
-          git checkout $BRANCH_NAME
+          git checkout ${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}
           ls -la
           cat README.md
           echo "Current Date and Time: $(date)" >> README.md
           git add .
-          git commit -m "add to readme"
+          git commit -m "Add to readme"
           git config --global push.autoSetupRemote true
-          git push origin $BRANCH_NAME
+          git push origin ${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}
         env:
           GITHUB_TOKEN: ${{ secrets.USER_PAT }}
 
-      - name: create pull request
-        run: |
-          curl -X POST \
-            -H "Authorization: token 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" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/<im-sandbox-phanirb/demo-2/pulls \
-            -d '{
-              "title": "update readme",
-              "head": "automated/demo-2-1694614983",
-              "base": "main",
-              "body": "created new branch and updated readme file"
-            }'
+      - name: Create Pull Request
+        id: create_pull_request
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.USER_PAT }}
+          script: |
+            const pr = await github.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Automated Pull Request',
+              head: context.payload.repository.default_branch, // Source branch
+              base: '${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}', // Target branch
+            });
+            console.log(`Created PR: ${pr.data.html_url}`);
