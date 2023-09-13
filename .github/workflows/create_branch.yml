@@ -24,4 +24,4 @@ jobs:
       - name: Create New Branch
         run: |
           git checkout -b ${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}
-          git push origin $BRANCH_NAME        
+          git push --set-upstream origin $BRANCH_NAME        
