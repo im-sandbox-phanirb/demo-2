@@ -30,6 +30,14 @@ jobs:
       - name: update readme file
         run: |
           ls -la
-          git branch
+          git checkout $BRANCH_NAME
+          touch 1.txt
+          ls -la
           cat README.md
           echo "Current Date and Time: $(date)" >> README.md
+          git add .
+          git commit -m "add to readme"
+          git config --global push.autoSetupRemote true
+          git push origin $BRANCH_NAME
+        env:
+          GITHUB_TOKEN: ${{ secrets.USER_PAT }}
