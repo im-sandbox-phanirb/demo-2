@@ -1,0 +1,23 @@
+name: create pull request
+on:
+  workflow_dispatch:
+
+jobs:
+  create_branch:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: create pull request
+        run: |
+          curl -X POST \
+            -H "Authorization: token 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" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/<im-sandbox-phanirb/demo-2/pulls \
+            -d '{
+              "title": "update readme",
+              "head": "automated/demo-2-1694614983",
+              "base": "main",
+              "body": "created new branch and updated readme file"
+            }'
