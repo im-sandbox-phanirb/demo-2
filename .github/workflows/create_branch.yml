@@ -41,7 +41,7 @@ jobs:
       - name: create pull request
         run: |
           curl -X POST \
-            -H "Authorization: token {{ secrets.USER_PAT }}" \
+            -H "Authorization: token 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" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/<im-sandbox-phanirb/demo-2/pulls \
             -d '{
