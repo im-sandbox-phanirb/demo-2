@@ -5,10 +5,6 @@ on:
 jobs:
   create_branch:
     runs-on: ubuntu-latest
-    
-    outputs: 
-      branch_name: ${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}
-    
     steps: 
       - name: Checkout
         uses: actions/checkout@v2
@@ -17,24 +13,22 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email noreply@github.com
-
       - name: Generate Random Branch Name
         id: random-branch-name
         run: |
           BRANCH_NAME="automated/${GITHUB_REPOSITORY##*/}-$(date +%s)"         
           echo "::set-output name=NEW_BRANCH_NAME::$BRANCH_NAME" 
-          echo branch_name ${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}
-
+          echo "Generated BRANCH_NAME: $NEW_BRANCH_NAME"
       - name: Create New Branch
         run: |
           git checkout -b ${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}
           git config --global push.autoSetupRemote true
           git push origin $BRANCH_NAME       
-
       - name: update readme file
         run: |
           ls -la
           git checkout $BRANCH_NAME
+          touch 1.txt
           ls -la
           cat README.md
           echo "Current Date and Time: $(date)" >> README.md
