@@ -27,12 +27,6 @@ jobs:
           git config --global push.autoSetupRemote true
           git push origin ${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}
 
-      - name: Debug Script
-        run: |
-          const context = JSON.parse('${{ toJson(github) }}');
-          console.log('GitHub context:', context);
-
-
       - name: Update README file
         run: |
           ls -la
