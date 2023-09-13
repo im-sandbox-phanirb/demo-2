@@ -46,7 +46,7 @@ jobs:
             https://api.github.com/repos/<im-sandbox-phanirb/demo-2/pulls \
             -d '{
               "title": "update readme",
-              "head": "${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}",
+              "head": "$BRANCH_NAME",
               "base": "main",
               "body": "created new branch and updated readme file"
             }'
