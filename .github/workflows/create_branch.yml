@@ -51,6 +51,9 @@ jobs:
     steps:
       - name: print branch name
         run: echo ${{ needs.create_branch.outputs.branch_name }}
+
+      - name: Checkout
+        uses: actions/checkout@v2
         
       - name: Create Pull Request        
         uses: peter-evans/create-pull-request@v3
