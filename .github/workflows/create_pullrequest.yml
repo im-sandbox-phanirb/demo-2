@@ -11,8 +11,12 @@ jobs:
 
       - name: checkout of branch
         run: |
+          git config user.name "GitHub Actions"
+          git config user.email noreply@github.com
           git branch
-          git checkout automated/demo-2-1694614983
+          git checkout -b automated/demo-2-1694614983
+          git config --global push.autoSetupRemote true
+          git push origin $BRANCH_NAME
         
       - name: Create Pull Request        
         uses: peter-evans/create-pull-request@v3
