@@ -5,6 +5,10 @@ on:
 jobs:
   create_branch:
     runs-on: ubuntu-latest
+    
+    outputs: 
+      branch_name: ${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}
+    
     steps: 
       - name: Checkout
         uses: actions/checkout@v2
@@ -19,7 +23,7 @@ jobs:
         run: |
           BRANCH_NAME="automated/${GITHUB_REPOSITORY##*/}-$(date +%s)"         
           echo "::set-output name=NEW_BRANCH_NAME::$BRANCH_NAME" 
-          echo "Generated BRANCH_NAME: $NEW_BRANCH_NAME"
+          echo branch_name ${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}
 
       - name: Create New Branch
         run: |
@@ -41,12 +45,19 @@ jobs:
           git push origin $BRANCH_NAME
         env:
           GITHUB_TOKEN: ${{ secrets.USER_PAT }}
-
-      - name: Create Pull Request        
-        uses: peter-evans/create-pull-request@v3
-        with:
-            token: ${{ secrets.USER_PAT }}
-            branch: ${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}
-            base: main            
-            title: "update readme"
-            body: "created new branch and updated readme file"
+          
+  Pull-request:
+    runs-on: ubuntu-latest
+    needs: create_branch
+    steps:
+      - name: print branch name
+        run: echo ${{ needs.create_branch.outputs.branch_name }}
+        
+      #- name: Create Pull Request        
+        #uses: peter-evans/create-pull-request@v3
+        #with:
+           # token: ${{ secrets.USER_PAT }}
+           # branch: ${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}
+            #base: main            
+            #title: "update readme"
+           # body: "created new branch and updated readme file"
