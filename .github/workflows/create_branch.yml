@@ -35,7 +35,6 @@ jobs:
         run: |
           ls -la
           git checkout $BRANCH_NAME
-          touch 1.txt
           ls -la
           cat README.md
           echo "Current Date and Time: $(date)" >> README.md
@@ -53,11 +52,11 @@ jobs:
       - name: print branch name
         run: echo ${{ needs.create_branch.outputs.branch_name }}
         
-      #- name: Create Pull Request        
-        #uses: peter-evans/create-pull-request@v3
-        #with:
-           # token: ${{ secrets.USER_PAT }}
-           # branch: ${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}
-            #base: main            
-            #title: "update readme"
-           # body: "created new branch and updated readme file"
+      - name: Create Pull Request        
+        uses: peter-evans/create-pull-request@v3
+        with:
+            token: ${{ secrets.USER_PAT }}
+            branch: ${{ needs.create_branch.outputs.branch_name }}
+            base: main           
+            title: "update readme"
+            body: "created new branch and updated readme file"
