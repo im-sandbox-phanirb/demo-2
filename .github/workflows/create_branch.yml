@@ -25,4 +25,11 @@ jobs:
         run: |
           git checkout -b ${{ steps.random-branch-name.outputs.NEW_BRANCH_NAME }}
           git config --global push.autoSetupRemote true
-          git push origin $BRANCH_NAME        
+          git push origin $BRANCH_NAME       
+
+      - name: update readme file
+        run: |
+          ls -la
+          git branch
+          cat README.md
+          echo "Current Date and Time: $(date)" >> README.md
