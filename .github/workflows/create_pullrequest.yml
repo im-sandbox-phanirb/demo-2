@@ -13,7 +13,7 @@ jobs:
         run: |
           #git config user.name "GitHub Actions"
           #git config user.email noreply@github.com
-          git branch
+          git branch --all
           #git checkout -b automated/demo-2-1694614983
           #git config --global push.autoSetupRemote true
           #git push origin automated/demo-2-1694614983
