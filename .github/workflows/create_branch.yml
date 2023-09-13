@@ -41,6 +41,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.USER_PAT }}
 
+      - name: Debug Script
+        run: |
+          const context = JSON.parse('${{ toJson(github) }}');
+          console.log('GitHub context:', context);
+
       - name: Create Pull Request
         id: create_pull_request
         uses: actions/github-script@v5
@@ -56,7 +61,4 @@ jobs:
             });
             console.log(`Created PR: ${pr.data.html_url}`);
 
-      - name: Debug Script
-        run: |
-          const context = JSON.parse('${{ toJson(github) }}');
-          console.log('GitHub context:', context);
+      
