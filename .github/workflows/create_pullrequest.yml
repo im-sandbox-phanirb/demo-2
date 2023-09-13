@@ -8,6 +8,9 @@ jobs:
     steps: 
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: checkout of branch
+        run: git checkout automated/demo-2-1694614983
         
       - name: Create Pull Request        
         uses: peter-evans/create-pull-request@v3
