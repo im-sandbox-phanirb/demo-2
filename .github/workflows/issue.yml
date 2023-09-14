@@ -1,7 +1,8 @@
 name: adds comments on issues
 
 on:
-  workflow_dispatch
+  issues:
+    types: [opened]
     
 jobs: 
   comment-with-action:
