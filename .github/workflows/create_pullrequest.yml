@@ -9,20 +9,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: checkout of branch
+      - name: create PR
         run: |
-          #git config user.name "GitHub Actions"
-          #git config user.email noreply@github.com
-          git branch --all
-          #git checkout -b automated/demo-2-1694614983
-          #git config --global push.autoSetupRemote true
-          #git push origin automated/demo-2-1694614983
-        
-      - name: Create Pull Request        
-        uses: peter-evans/create-pull-request@v3
-        with:
-            token: ${{ secrets.USER_PAT }}
-            branch: automated/demo-2-1694614983
-            base: main           
-            title: "update readme"
-            body: "created new branch and updated readme file"
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/im-sandbox-phanirb/demo-2/pulls \
+            -f title='test' \
+          -f body='Please pull these awesome changes in!' \
+          -f head='automated/demo-2-1694610399' \
+          -f base='main' 
