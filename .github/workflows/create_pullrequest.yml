@@ -27,7 +27,8 @@ jobs:
           -f head='automated/demo-2-1694610399' \
           -f base='main')
           
-           echo "::set-output name=url::$pr_response"
+           pr_url=$(echo "$pr_response" | jq -r '.url')
+           echo "::set-output name=url::$pr_url"
 
       - name: Getting output
         run: |
