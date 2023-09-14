@@ -17,7 +17,7 @@ jobs:
       - name: create PR
         id: create_pull_request
         run: |
-          gh api \
+          pr_response=$(gh api \
             --method POST \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
@@ -25,10 +25,14 @@ jobs:
             -f title='test' \
           -f body='Please pull these awesome changes in!' \
           -f head='automated/demo-2-1694610399' \
-          -f base='main' 
-          
-      - name: getting output
+          -f base='main')
+        # Extract the URL from the JSON response and set it as an output
+           
+
+      - name: Getting output
         run: |
+          pr_url=$(echo "$pr_response" | jq -r '.url')
+            echo "::set-output name=url::$pr_url"
           pr_url="${{ steps.create_pull_request.outputs.url }}"
           echo "PR URL: $pr_url"
     env:
