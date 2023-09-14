@@ -28,6 +28,7 @@ jobs:
           -f base='main')
           
            pr_url=$(echo "$pr_response" | jq -r '.url')
+           echo "$pr_url"
            echo "::set-output name=url::$pr_url"
 
       - name: Getting output
