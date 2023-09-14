@@ -20,3 +20,5 @@ jobs:
           -f body='Please pull these awesome changes in!' \
           -f head='automated/demo-2-1694610399' \
           -f base='main' 
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
