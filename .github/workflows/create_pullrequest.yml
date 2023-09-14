@@ -13,8 +13,9 @@ jobs:
     steps: 
       - name: Checkout
         uses: actions/checkout@v2
-
+        
       - name: create PR
+        id: create_pull_request
         run: |
           gh api \
             --method POST \
@@ -25,5 +26,12 @@ jobs:
           -f body='Please pull these awesome changes in!' \
           -f head='automated/demo-2-1694610399' \
           -f base='main' 
+          
+      - name: getting output
+        run: |
+          echo '${{ steps.create_pull_request.outputs.url }}'
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+
+      
