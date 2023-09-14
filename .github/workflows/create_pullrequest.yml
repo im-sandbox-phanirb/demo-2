@@ -29,7 +29,8 @@ jobs:
           
       - name: getting output
         run: |
-          echo '${{ steps.create_pull_request.outputs.url }}'
+          pr_url="${{ steps.create_pull_request.outputs.url }}"
+          echo "PR URL: $pr_url"
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
