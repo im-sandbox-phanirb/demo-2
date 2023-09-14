@@ -2,6 +2,11 @@ name: create pull request
 on:
   workflow_dispatch:
 
+permissions: 
+  id-token: write
+  contents: write
+  pull-requests: write
+
 jobs:
   create_branch:
     runs-on: ubuntu-latest
