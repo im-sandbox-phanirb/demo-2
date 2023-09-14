@@ -30,6 +30,9 @@ jobs:
           https://api.github.com/repos/${ORGANIZATION}/${REPOSITORY}/issues/${ISSUE_NUMBER}/comments \
           -f body='
           Issue comment from API call
+          branch: test branch
+          Updated raedme file
+          pull request url: 'test'
           '
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
