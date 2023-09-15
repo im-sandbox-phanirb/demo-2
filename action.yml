@@ -1,5 +1,9 @@
 name: create pull request
-
+inputs: 
+  GITHUB_TOKEN: # id of input
+    description: 'Who to greet'
+    required: true
+  
 runs:
   using: composite
   steps:    
@@ -19,5 +23,5 @@ runs:
            echo "$pr_url"
          
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
         shell: bash  
