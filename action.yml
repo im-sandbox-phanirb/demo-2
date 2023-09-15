@@ -18,6 +18,6 @@ runs:
            pr_url=$(echo "$pr_response" | jq -r '.url')
            echo "$pr_url"
          
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    shell: bash  
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash  
