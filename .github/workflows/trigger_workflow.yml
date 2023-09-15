@@ -13,10 +13,8 @@ jobs:
       - name: Get Issue Number from Comment
         id: get_issue_number
         run: |
-          issue_number=$(gh api \
-            --method GET \
-            /repos/${ORGANIZATION}/${REPOSITORY}/issues/${{ github.event.workflow_run.payload.comment.body | split: ': ' | last | trim }} \
-            --jq '.number')
+          comment_body="${{ github.event.workflow_run.payload.comment.body }}"
+          issue_number=$(echo "$comment_body" | sed -n 's/.*Issue Number: \([0-9]*\).*/\1/p')
           echo "::set-output name=issue_number::${issue_number}"
 
       - name: Close Issue
