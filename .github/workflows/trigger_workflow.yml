@@ -10,22 +10,22 @@ jobs:
   close_issue:
     runs-on: ubuntu-latest
     steps:
-      - name: Get Issue Number from Comment
-        id: get_issue_number
-        run: |
-          comment_body="${{ github.event.workflow_run.payload.comment.body }}"
-          echo "Comment Body: $comment_body"
-          # Extract issue number from comment body
-          issue_number=$(echo "$comment_body" | grep -oP 'Issue Number: \K\d+')
-          echo "Issue Number: $issue_number"
-          echo "::set-output name=issue_number::${issue_number}"
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-      - name: Close Issue
+      - name: Get Latest Issue Number
+        id: get_latest_issue
         run: |
-          gh api -X PATCH \
-          https://api.github.com/repos/${ORGANIZATION}/${REPOSITORY}/issues/${{ steps.get_issue_number.outputs.issue_number }} \
-          -f state=closed
-        env:
+          latest_issue=$(gh api /repos/${{ github.repository }}/issues?state=all | jq '.[0]')
+          latest_issue_number=$(echo "$latest_issue" | jq -r '.number')
+          echo "::set-output name=latest_issue_number::$latest_issue_number"
+
+      - name: Close Latest Issue
+        if: steps.get_latest_issue.outputs.latest_issue_number
+        run: |
+          latest_issue_number="${{ steps.get_latest_issue.outputs.latest_issue_number }}"
+          gh api -X PATCH /repos/${{ github.repository }}/issues/${latest_issue_number} -f state=closed
+    env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ORGANIZATION: ${{ github.event.organization.login }}
           REPOSITORY: ${{ github.event.repository.name }}
