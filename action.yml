@@ -1,7 +1,7 @@
 name: create pull request
 inputs: 
   GITHUB_TOKEN: # id of input
-    description: 'Who to greet'
+    description: 'token'
     required: true
   
 runs:
