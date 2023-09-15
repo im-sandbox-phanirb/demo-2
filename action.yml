@@ -1,0 +1,24 @@
+name: create pull request
+
+runs:
+  using: composite
+    steps:    
+      - name: create PR
+        id: create_pull_request
+        run: |
+          pr_response=$(gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/im-sandbox-phanirb/demo-2/pulls \
+            -f title='test' \
+          -f body='Please pull these awesome changes in!' \
+          -f head='automated/demo-2-1694610399' \
+          -f base='main')
+          
+           pr_url=$(echo "$pr_response" | jq -r '.url')
+           echo "$pr_url"
+         
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    shell: bash  
