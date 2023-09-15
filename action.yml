@@ -2,9 +2,8 @@ name: create pull request
 
 runs:
   using: composite
-    steps:    
+  steps:    
       - name: create PR
-        id: create_pull_request
         run: |
           pr_response=$(gh api \
             --method POST \
