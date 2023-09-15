@@ -5,7 +5,13 @@ on:
 jobs:
   comment-with-api:
       runs-on: ubuntu-latest
+      outputs:
+        issue_number: ${{ steps.set_issue_number.outputs.issue_number }}
       steps: 
+      - name: Set Issue Number
+        id: set_issue_number
+        run: echo "::set-output name=issue_number::${{ github.event.issue.number }}"
+      
       - name: Create commment with API
         run: |
           gh api -X POST \
