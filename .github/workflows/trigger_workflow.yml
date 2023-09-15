@@ -14,7 +14,8 @@ jobs:
         id: get_issue_number
         run: |
           comment_body="${{ github.event.workflow_run.payload.comment.body }}"
-          issue_number=$(echo "$comment_body" | sed -n 's/.*Issue Number: \([0-9]*\).*/\1/p')
+          # Extract issue number from comment body
+          issue_number=$(echo "$comment_body" | grep -oP 'Issue Number: \K\d+')
           echo "::set-output name=issue_number::${issue_number}"
 
       - name: Close Issue
