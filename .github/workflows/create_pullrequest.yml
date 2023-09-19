@@ -27,6 +27,7 @@ jobs:
       - name: Getting response
         run: |
           ls -la
+          cat update_response.json
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
