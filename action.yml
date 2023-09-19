@@ -27,7 +27,7 @@ runs:
           -f head='automated/demo-2-1695132595' \
           -f base='main')
            echo "$pr_response"
-           echo "$response" > update_response.json
+           echo "$pr_response" > update_response.json
            
            
            pr_url=$(echo "$pr_response" | jq -r '.url')
