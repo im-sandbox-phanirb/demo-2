@@ -8,6 +8,10 @@ outputs:
     description: "pull request url"
     value: ${{ steps.pr_creation.outputs.URL }}
 
+  PR_RESPONSE:
+    description: "Getting response of PR"
+    value: ${{ steps.pr_creation.outputs.RESPONSE }}
+
   
 runs:
   using: composite
@@ -24,12 +28,11 @@ runs:
           -f body='Please pull these awesome changes in!' \
           -f head='automated/demo-2-1694610399' \
           -f base='main')
-        env:
-          GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
-        shell: bash
-      - name: get url
-        run: |
+
            pr_url=$(echo "$pr_response" | jq -r '.url')
            echo "$pr_url"
            echo "::set-output name=URL::$pr_url"
-        shell: bash  
+           echo "::set-output name=RESPONSE::$pr_response"
+        env:
+          GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+        shell: bash
