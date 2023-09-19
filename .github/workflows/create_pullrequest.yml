@@ -20,9 +20,6 @@ jobs:
         with: 
           GITHUB_TOKEN: ${{ secrets.USER_PAT }}
 
-      - name: Archive Pull Request URL
-        run: echo "::set-output name=pr_url::${{ steps.trigger_pr.outputs.PR_URL }}"
-
       - name: Verify Output
         run: |
           echo "Pull Request URL: ${{ steps.trigger_pr.outputs.PR_URL }}"
