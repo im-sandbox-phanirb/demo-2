@@ -15,14 +15,17 @@ jobs:
         uses: actions/checkout@v2
         
       - name: create PR
-        id: create_pull_request
+        id: trigger_pr
         uses: im-sandbox-phanirb/demo-2@main
         with: 
           GITHUB_TOKEN: ${{ secrets.USER_PAT }}
 
-      - name: verify output    
+      - name: Archive Pull Request URL
+        run: echo "::set-output name=pr_url::${{ steps.trigger_pr.outputs.PR_URL }}"
+
+      - name: Verify Output
         run: |
-          echo "$pr_url"
+          echo "Pull Request URL: ${{ steps.trigger_pr.outputs.PR_URL }}"
           
 
         
