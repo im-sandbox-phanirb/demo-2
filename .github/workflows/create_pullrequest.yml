@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: update_response.json
-          path: ./
+          path: ./update_response.json
           
 
         
