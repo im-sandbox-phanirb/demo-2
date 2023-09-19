@@ -42,4 +42,4 @@ runs:
         with:
           name: update_response.json
           path: ./update_response.json
-        shell: bash
+  
