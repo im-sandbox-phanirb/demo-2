@@ -9,12 +9,7 @@ jobs:
   close_issue:
     runs-on: ubuntu-latest
     steps:
-      - name: Check for Label
-        id: check_label
-        run: echo "::set-output name=has_label::${{ contains(github.event.issue.labels.*.name, 'completed') }}"
-
       - name: Close Issue
-        if: steps.check_label.outputs.has_label == 'true'
         run: |
           issue_number="${{ github.event.issue.number }}"
           
