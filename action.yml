@@ -24,7 +24,7 @@ runs:
             /repos/im-sandbox-phanirb/demo-2/pulls \
             -f title='test' \
           -f body='Please pull these awesome changes in!' \
-          -f head='automated/demo-2-1695130330' \
+          -f head='automated/demo-2-1695130572' \
           -f base='main')
           
            echo "$pr_response"
