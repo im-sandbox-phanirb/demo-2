@@ -24,7 +24,7 @@ runs:
             /repos/im-sandbox-phanirb/demo-2/pulls \
             -f title='test' \
           -f body='Please pull these awesome changes in!' \
-          -f head='automated/demo-2-1695132338' \
+          -f head='automated/demo-2-1695132595' \
           -f base='main')
           
            echo "$pr_response"
@@ -37,4 +37,11 @@ runs:
        
         env:
           GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+        shell: bash
+        
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: update_response.json
+          path: ./update_response.json
         shell: bash
