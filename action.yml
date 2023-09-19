@@ -25,7 +25,8 @@ runs:
           -f head='automated/demo-2-1694610399' \
           -f base='main')
 
-                   
+        - name: get url
+          run: |
            pr_url=$(echo "$pr_response" | jq -r '.url')
            echo "$pr_url"
            echo "::set-output name=URL::$pr_url"
