@@ -4,10 +4,7 @@ inputs:
     description: 'token'
     required: true
 
-outputs:
-  PR_URL:
-    description: "pull request url"
-    value: ${{ steps.pr_creation.outputs.pr_url }}
+
   
 runs:
   using: composite
