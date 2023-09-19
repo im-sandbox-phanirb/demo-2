@@ -1,0 +1,30 @@
+name: Close Issue on Label
+
+on:
+  issues:
+    types:
+      - labeled
+
+jobs:
+  close_issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for Label
+        id: check_label
+        run: echo "::set-output name=has_label::${{ contains(github.event.issue.labels.*.name, 'completed') }}"
+
+      - name: Close Issue
+        if: steps.check_label.outputs.has_label == 'true'
+        run: |
+          issue_number="${{ github.event.issue.number }}"
+          
+          # Close the issue
+          curl -X PATCH \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/im-sandbox-phanirb/demo-2/issues/$issue_number \
+            -d '{"state": "closed"}'
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
