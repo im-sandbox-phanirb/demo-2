@@ -23,6 +23,10 @@ jobs:
       - name: Verify Output
         run: |
           echo "Pull Request URL: ${{ steps.trigger_pr.outputs.PR_URL }}"
+
+      - name: Getting response
+        run: |
+          ls -la
           
 
         
