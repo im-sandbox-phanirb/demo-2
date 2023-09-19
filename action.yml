@@ -3,11 +3,17 @@ inputs:
   GITHUB_TOKEN: # id of input
     description: 'token'
     required: true
+
+outputs:
+  pR_URL:
+    description: "pull request url"
+    value: ${{ steps.pr_creation.outputs.pr_url }}
   
 runs:
   using: composite
   steps:    
       - name: create PR
+        id: pr_creation
         run: |
           pr_response=$(gh api \
             --method POST \
