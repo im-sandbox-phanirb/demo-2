@@ -1,0 +1,26 @@
+name: Attach Label to Issue
+
+on:
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue Number'
+        required: true
+      label:
+        description: 'Label Name'
+        required: true
+
+jobs:
+  attach_label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Attach Label
+        run: |
+          issue_number="${{ github.event.inputs.issue_number }}"
+          label="${{ github.event.inputs.label }}"
+
+          # Attach the label to the issue
+          gh issue add-labels $issue_number $label
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
