@@ -5,7 +5,7 @@ inputs:
     required: true
 
 outputs:
-  pR_URL:
+  PR_URL:
     description: "pull request url"
     value: ${{ steps.pr_creation.outputs.pr_url }}
   
