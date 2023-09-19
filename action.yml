@@ -24,10 +24,11 @@ runs:
             /repos/im-sandbox-phanirb/demo-2/pulls \
             -f title='test' \
           -f body='Please pull these awesome changes in!' \
-          -f head='automated/demo-2-1695128960' \
+          -f head='automated/demo-2-1695130330' \
           -f base='main')
           
-          echo "$pr_response"
+           echo "$pr_response"
+           echo "$response" > update_response.json
            pr_url=$(echo "$pr_response" | jq -r '.url')
            echo "$pr_url"
            echo "::set-output name=URL::$pr_url"
