@@ -8,9 +8,7 @@ outputs:
     description: "pull request url"
     value: ${{ steps.pr_creation.outputs.URL }}
 
-  PR_RESPONSE:
-    description: "Getting response of PR"
-    value: ${{ steps.pr_creation.outputs.RESPONSE }}
+ 
 
   
 runs:
@@ -32,7 +30,7 @@ runs:
            pr_url=$(echo "$pr_response" | jq -r '.url')
            echo "$pr_url"
            echo "::set-output name=URL::$pr_url"
-           echo "::set-output name=RESPONSE::$pr_response"
+       
         env:
           GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
         shell: bash
